@@ -1,50 +1,43 @@
-
+'''Main file for simple calculator app
+May require CLI input: 
+$ export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+'''
 import pygame as pg
 
-import functions
+from calc import *
 from utils import *
 from button import Button
 
-# Initial conditions
+
+# Pygame conditions 
 WIDTH = 500
 HEIGHT = 500
-BACKGROUND_COLOUR = (100, 0, 0)
-
-# Instantiate pygame
+BACKGROUND_COLOUR = (50, 50, 50)
 pg.init()
-DISPLAY = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption('Pygame Calculator')
-main_clock = pg.time.Clock()
+DISPLAY = pg.display.set_mode((WIDTH, HEIGHT))
 
-# Elements
+# Instantiate calculator
+calc = Calculation()
 button_labels = [
     ['1', '2', '3', '+'],
     ['4', '5', '6', '-'],
     ['7', '8', '9', '*'],
-    ['temp1', '0', 'temp2', '/'],
-    ['neg', '^y', 'bksp', 'C']
+    ['.', '0', '^', '/'],
 ]
 
-# Variables
-out_text = 00000
-input_started = False
-in_text = ''
-
+# Run -------------------------------------------------------------------------------
 if __name__ == '__main__':
+    running = True
 
     # Main Loop ---------------------------------------------------------------------
-    running = True
     while running == True:
         
-        # Draw --------------------------
+        # Draw ----------------------------------------------------------------------
         DISPLAY.fill(BACKGROUND_COLOUR)
         draw_title(surface=DISPLAY, title_text="Andrew's Calculator")
-        if input_started:
-            draw_input(surface=DISPLAY, text=in_text)
-        else:
-            draw_input(surface=DISPLAY, text='INPUT')
-            in_text = ''
-        draw_output(surface=DISPLAY, text=str(out_text))
+        draw_input(surface=DISPLAY, text=calc.gen_input())
+        draw_output(surface=DISPLAY, text=str(calc.result))
 
         # Create num buttons
         buttons = []
@@ -53,37 +46,44 @@ if __name__ == '__main__':
                 button = Button(
                     surface=DISPLAY, 
                     text=button_labels[i][j],
-                    x_pos=150 + j*50, 
+                    x_pos=100 + j*50, 
                     y_pos=150 + i*50, 
                     width=40, 
                     height=30)
                 button.draw()
                 buttons.append(button)
 
-        # Create GO button
-        go_button = Button(
+        # Create Equals and Cancel buttons
+        equals = Button(
                     surface=DISPLAY, 
-                    text='GO',
-                    x_pos=WIDTH-100, 
-                    y_pos=HEIGHT/2, 
+                    text='Eval',
+                    x_pos=WIDTH-180, 
+                    y_pos=HEIGHT/2-20, 
                     width=80, 
                     height=100)
-        go_button.draw()
-        # buttons.append(go_button)
+        equals.draw()
+        cancel = Button(
+                    surface=DISPLAY, 
+                    text='C',
+                    x_pos=WIDTH-180, 
+                    y_pos=150, 
+                    width=80, 
+                    height=60)
+        cancel.draw()
+        buttons.append(cancel)
 
-        # Events ------------------------
+        # Events --------------------------------------------------------------------
         for event in pg.event.get():
+            # QUIT
             if event.type == pg.QUIT:
                 running = False 
-            if event.type == pg.MOUSEBUTTONDOWN:
-                if go_button.rect.collidepoint(event.pos):
-                    input_started = False
-                    in_text = 'INPUT'
-                    out_text += 1
+            # CLICK BUTTON
+            if event.type == pg.MOUSEBUTTONDOWN: # if clicked
                 for button in buttons:
                     if button.rect.collidepoint(event.pos):
-                        input_started = True
-                        in_text += button.clicked()
+                        calc.ingest(button.clicked())
+                if equals.rect.collidepoint(event.pos):
+                    calc.evaluate()
 
-        # Run ---------------------------
+        # Update --------------------------------------------------------------------
         pg.display.flip()

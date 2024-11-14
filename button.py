@@ -13,9 +13,9 @@ class Button:
 
     def draw(self):
         if self.rect.collidepoint(pg.mouse.get_pos()):
-            current_button_color = [50,50,50]
+            current_button_color = [200,200,200]
         else:
-            current_button_color = [100,100,100]
+            current_button_color = [250,250,250]
 
         pg.draw.rect(self.surface, current_button_color, self.rect)
         button_text = self.font.render(self.text, True, [0,0,0])
