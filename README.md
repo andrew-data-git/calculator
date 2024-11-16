@@ -5,7 +5,7 @@
 
 | Date Started | Date Completed |
 | ------ | ------ |
-| 01/01/2020 | 01/01/2020 |
+| 13/11/2024 | --/--/-- |
 
 Use Pygame to implement a calculator app and practice OOP.
 
