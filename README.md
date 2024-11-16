@@ -5,13 +5,14 @@
 
 | Date Started | Date Completed |
 | ------ | ------ |
-| 13/11/2024 | --/--/-- |
+| 13/11/2024 | 16/11/2024 |
 
 Use Pygame to implement a calculator app and practice OOP.
 
-[GIF of usage]
+![](https://github.com/andrew-data-git/calculator/demo.gif)
 
 ## Features
 
-- feature 1
-- feature 2
+- Simple math enabled
+- Interact with basic GUI 
+- Error handling built-in

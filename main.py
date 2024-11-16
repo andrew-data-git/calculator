@@ -2,6 +2,10 @@
 May require CLI input: 
 $ export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6
 '''
+import os
+os.environ["LD_PRELOAD"] = "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+print("LD_PRELOAD set to:", os.environ["LD_PRELOAD"])
+
 import pygame as pg
 
 from calc import *
