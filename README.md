@@ -9,7 +9,7 @@
 
 Use Pygame to implement a calculator app and practice OOP.
 
-![](https://github.com/andrew-data-git/calculator/master/demo.gif)
+![](https://github.com/andrew-data-git/calculator/blob/main//demo.gif)
 
 ## Features
 
